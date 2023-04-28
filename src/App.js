@@ -14,6 +14,7 @@ function App() {
   };
 
  const [products, setProducts] = useState([])
+ 
   useEffect(() => {
     GetProducts();
   },[]);
@@ -127,10 +128,13 @@ function App() {
     <div className="App">
        <Container>
           <h3 className='text-center'>CRUD APPLICATION</h3>
+
+          <Button variant="success" className='mb-3' onClick={handleShow}>Create</Button>
+
            <Row>
                <Col md={12}>
-                  <Button variant="primary" className='mt-3' onClick={handleShow}>Create</Button>
-                  <Table striped bordered hover>
+                  
+                  <Table striped bordered hover size='sm' variant='dark'>
                         <thead>
                           <tr>
                             <th>#</th>
@@ -151,9 +155,10 @@ function App() {
                                 <td>{data.description}</td>
                                 <td>{data.price}</td>
                                 <td>{data.created_at}</td>
-                                <td>
-                                  <Button variant="primary" className='btn-sm' onClick={() => ShowData(data)}>Update</Button>
-                                  <Button variant="danger" className='mr-3 btn-sm' onClick={() => DeleteData(data.id)}>Delete</Button>
+                                <td align='center'>
+                                  <Button variant="primary" className='btn-sm me-2' onClick={() => ShowData(data)}>Update</Button>   
+
+                                  <Button variant="danger" className='btn-sm' onClick={() => DeleteData(data.id)}>Delete</Button>
                                 </td>
                              </tr>
                            )}
