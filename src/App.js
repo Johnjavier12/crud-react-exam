@@ -14,7 +14,7 @@ function App() {
   };
 
  const [products, setProducts] = useState([])
- 
+
   useEffect(() => {
     GetProducts();
   },[]);
@@ -32,12 +32,14 @@ function App() {
   const ProductID = useRef();
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCreateModal = () => {
+    setShow(show ? false : true)
+  }
 
   const [showUpdate, setShowUpdate] = useState(false);
-  const handleCloseUpdate = () => setShowUpdate(false);
-  const handleShowUpdate = () => setShowUpdate(true);
+  const handleUpdateModal = () => {
+    setShowUpdate(showUpdate ? false : true)
+  } 
 
   const CreateData = () => {
       const data = {
@@ -56,7 +58,7 @@ function App() {
          if(result.data) {
             alert('Successfully Created!')
             GetProducts();
-            handleClose();
+            handleCreateModal();
          }
       }).catch(err => {
         console.log(err);
@@ -95,7 +97,7 @@ function App() {
       ProductID.current.value = data.id;
     },500);
 
-    handleShowUpdate();
+    handleUpdateModal();
   }
 
   const UpdateData = () => {
@@ -117,7 +119,7 @@ function App() {
        if(result.data) {
           alert('Successfully Updated!')
           GetProducts();
-          handleCloseUpdate();
+          handleUpdateModal();
        }
     }).catch(err => {
       console.log(err);
@@ -129,7 +131,7 @@ function App() {
        <Container>
           <h3 className='text-center'>CRUD APPLICATION</h3>
 
-          <Button variant="success" className='mb-3' onClick={handleShow}>Create</Button>
+          <Button variant="success" className='mb-3' onClick={handleCreateModal}>Create</Button>
 
            <Row>
                <Col md={12}>
@@ -169,7 +171,7 @@ function App() {
            </Row>
        </Container>
 
-       <Modal show={show} onHide={handleClose}>
+       <Modal show={show} onHide={handleCreateModal}>
           <Modal.Header closeButton>
             <Modal.Title>Create Product</Modal.Title>
           </Modal.Header>
@@ -192,7 +194,7 @@ function App() {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleCreateModal}>
               Close
             </Button>
             <Button variant="primary" onClick={CreateData}>
@@ -201,7 +203,7 @@ function App() {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={showUpdate} onHide={handleCloseUpdate}>
+        <Modal show={showUpdate} onHide={handleUpdateModal}>
           <Modal.Header closeButton>
             <Modal.Title>Update Product</Modal.Title>
           </Modal.Header>
@@ -228,7 +230,7 @@ function App() {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseUpdate}>
+            <Button variant="secondary" onClick={handleUpdateModal}>
               Close
             </Button>
             <Button variant="primary" onClick={UpdateData}>
